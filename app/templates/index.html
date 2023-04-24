@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load mptt_tags %}
+<ul class="list-group tree">
+  {% recursetree nodes %}
+    <li class="list-group-item">
+        {{ node.name }} ({{node.position}})
+        {% if not node.is_leaf_node %}
+          <ul class=" subtree">
+            {{ children }}
+          </ul>
+        {% endif %}
+    </li>
+    {% endrecursetree %}
+</ul>
+<label for="customRange1" class="form-label">Example range</label>
+<input type="range" class="form-range" id="customRange1">
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="employee_list_data" style="margin: 5px 5px;">
+  <h1>Employee List</h1>
+
+  <form id="sort-form" >
+    <label for="sort_by">Sort by:</label>
+    <select name="sort_by" id="sort_by">
+      <option value="">-</option>
+      <option value="name">Name (asc)</option>
+      <option value="-name">Name (desc)</option>
+      <option value="position">Position (asc)</option>
+      <option value="-position">Position (desc)</option>
+      <option value="date">Date (asc)</option>
+      <option value="-date">Date (desc)</option>
+      <option value="email">Email (asc)</option>
+      <option value="-email">Email (desc)</option>
+    </select>
+  </form>
+
+  <table id="employee-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Date</th>
+        <th>Email</th>
+        <th>Manager</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in object_list %}
+        <tr id="employee-row-{{ employee.pk }}">
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.position }}</td>
+          <td>{{ employee.date }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.manager.name }}</td>
+          <td><a class="btn btn-primary" href="{% url 'employee_edit' employee.pk %}">Edit</a></td>
+          <td><a class="btn btn-danger" href="{% url 'employee_delete' employee.pk %}">Delete</a></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No employees found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#sort_by').change(function() {
+      $('#sort-form').submit();
+    });
+
+    $('#sort-form').submit(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        success: function(response) {
+          $('#content').html(response);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

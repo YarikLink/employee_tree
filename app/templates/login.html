@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <div class="fadeIn first">
+          <img src="{% static 'images/login.png' %}" id="icon" alt="User Icon" style="width:30%; margin: 10px;"/>
+        </div>
+    
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+            <input type="password" id="password" class="fadeIn second" name="password" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+
+    
+      </div>
+    </div>
+</body>
+</html>
